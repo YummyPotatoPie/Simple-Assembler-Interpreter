@@ -22,9 +22,7 @@ namespace Simple_Assembler_Interpreter
         private static bool IsNum(string Token)
         {
             for (int i = Token[0] == '-' ? 1 : 0; i < Token.Length; i++)
-            {
                 if ((Token[i] == '.' && i == 0) || (Digits.IndexOf(Token[i]) == -1 && Token[i] != '.')) return false;
-            }
             return true;
         }
 
@@ -34,9 +32,7 @@ namespace Simple_Assembler_Interpreter
         /// <param name="Tokens"></param>
         /// <param name="Registers"></param>
         private static void Inc(string[] Tokens, ref Dictionary<string, int> Registers)
-        {
             if (Tokens.Length == 2 && Registers.ContainsKey(Tokens[1])) Registers[Tokens[1]]++;
-        }
 
         /// <summary>
         /// Функция декрементирования виртуального регистра
@@ -44,9 +40,7 @@ namespace Simple_Assembler_Interpreter
         /// <param name="Tokens"></param>
         /// <param name="Registers"></param>
         private static void Dec(string[] Tokens, ref Dictionary<string, int> Registers)
-        {
             if (Tokens.Length == 2 && Registers.ContainsKey(Tokens[1])) Registers[Tokens[1]]--;
-        }
 
         /// <summary>
         /// Функция реализующая команду помещения значения в виртуальный регистр
@@ -56,21 +50,13 @@ namespace Simple_Assembler_Interpreter
         private static void Mov(string[] Tokens, ref Dictionary<string, int> Registers)
         {
             if (Tokens.Length == 3 && Registers.ContainsKey(Tokens[1]) && IsNum(Tokens[2]))
-            {
                 Registers[Tokens[1]] = Convert.ToInt32(Tokens[2]);
-            }
             else if (Tokens.Length == 3 && Registers.ContainsKey(Tokens[1]) && Registers.ContainsKey(Tokens[2]))
-            {
                 Registers[Tokens[1]] = Registers[Tokens[2]];
-            }
             else if (Tokens.Length == 3 && !Registers.ContainsKey(Tokens[1]) && IsNum(Tokens[2]))
-            {
                 Registers.Add(Tokens[1], Convert.ToInt32(Tokens[2]));
-            }
             else
-            {
                 Registers.Add(Tokens[1], Registers[Tokens[2]]);
-            }
         }
 
         /// <summary>
@@ -82,21 +68,13 @@ namespace Simple_Assembler_Interpreter
         private static void Jnz(string[] Tokens, ref Dictionary<string, int> Registers, ref int CommandCounter)
         {
             if (Tokens.Length == 3 && IsNum(Tokens[1]) && Convert.ToInt32(Tokens[1]) != 0)
-            {
                 CommandCounter += Convert.ToInt32(Tokens[2]);
-            }
             else if (Tokens.Length == 3 && IsNum(Tokens[1]) && Convert.ToInt32(Tokens[1]) == 0)
-            {
                 CommandCounter++;
-            }
             else if (Tokens.Length == 3 && Registers.ContainsKey(Tokens[1]) && IsNum(Tokens[2]) && Registers[Tokens[1]] != 0)
-            {
                 CommandCounter += Convert.ToInt32(Tokens[2]);
-            }
             else
-            {
                 CommandCounter++;
-            }
         }
 
         /// <summary>
@@ -112,9 +90,7 @@ namespace Simple_Assembler_Interpreter
             foreach (char ch in Command)
             {
                 if (ch != ' ')
-                {
                     Token += ch;
-                }
                 else
                 {
                     Tokens.Add(Token);
